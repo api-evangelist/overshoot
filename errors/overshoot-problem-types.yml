@@ -1,0 +1,120 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/overshoot-openapi.yaml
+docs: https://docs.overshoot.ai/api-reference/errors
+format: custom-json
+notes: >-
+  Overshoot does not use RFC 9457 problem+json. Two envelope shapes are in use:
+  stream-lifecycle and billing endpoints return a flat {"detail": "<message>"}
+  object; /chat/completions returns a nested {"detail": {"error": {message, type,
+  code, upstream?}}} envelope. Request validation failures use
+  {"error": "validation_error", "message": "...", "details": []}.
+envelopes:
+  stream_lifecycle:
+    example: '{ "detail": "Stream not found" }'
+    used_by:
+    - POST /streams
+    - GET /streams/{stream_id}
+    - DELETE /streams/{stream_id}
+    - POST /streams/{stream_id}/keepalive
+    - billing endpoints
+  chat_completions:
+    example: '{ "detail": { "error": { "message": "Stream not found: <stream_id>", "type": "stream_error", "code": "stream_not_found" } } }'
+    used_by:
+    - POST /chat/completions
+    error_types:
+    - stream_error
+    - validation_error
+    - provider_error
+    - upstream_error
+    - billing_error
+    - rate_limit_error
+    - internal_error
+  validation:
+    example: '{ "error": "validation_error", "message": "Request validation failed", "details": [] }'
+http_status:
+- status: 400
+  category: Bad Request
+  remediation: Verify stream URL, query parameters, segment validity, and model/media compatibility.
+- status: 401
+  category: Authentication
+  remediation: Provide or regenerate your bearer API key.
+- status: 402
+  category: Billing
+  remediation: Resolve account billing state; inference returns 402 when billing denies a request.
+- status: 403
+  category: Forbidden
+  remediation: Verify you own the requested resource.
+- status: 404
+  category: Not Found
+  remediation: Confirm stream exists, lease is active, and resource has not been deleted.
+- status: 409
+  category: Conflict
+  remediation: Check region alignment (RegionError); await frame production if needed.
+- status: 410
+  category: Gone
+  remediation: Requested frame index has been removed and cannot be recovered.
+- status: 422
+  category: Unprocessable Entity
+  remediation: Correct request structure per validation requirements.
+- status: 429
+  category: Rate Limited
+  remediation: Implement backoff; honor rate-limit headers and Retry-After.
+- status: 500
+  category: Server Error
+  remediation: Retry request; contact support if persistent.
+- status: 502
+  category: Bad Gateway
+  remediation: Provider request failed; retry with backoff.
+- status: 503
+  category: Unavailable
+  remediation: Service temporarily down; retry later.
+- status: 504
+  category: Gateway Timeout
+  remediation: Provider request exceeded timeout; retry.
+chat_error_codes:
+- code: stream_url_invalid
+  type: stream_error
+  guidance: Use the correct ovs://streams/<id>?... format.
+- code: query_param_invalid
+  type: stream_error
+  guidance: Fix missing, duplicate, or malformed parameters.
+- code: stream_not_found
+  type: stream_error
+  guidance: Verify stream ID exists and is accessible.
+- code: stream_unauthorized
+  type: stream_error
+  guidance: Confirm the API key owns the stream.
+- code: segment_empty
+  type: stream_error
+  guidance: Check the media URL yields retained frames.
+- code: segment_invalid
+  type: stream_error
+  guidance: Adjust so video end time exceeds start time.
+- code: frame_evicted
+  type: stream_error
+  guidance: Request newer frame indices (older frames age out of the retention window).
+- code: frame_not_yet_produced
+  type: stream_error
+  guidance: Wait for the frame index to arrive.
+- code: model_unavailable
+  type: provider_error
+  guidance: Select an available model; check model status.
+- code: model_video_unsupported
+  type: validation_error
+  guidance: Use an image-only model or request an image segment.
+- code: provider_safety_block
+  type: provider_error
+  guidance: Revise request content; check provider content policies.
+- code: billing_denied
+  type: billing_error
+  guidance: Resolve the account billing issue.
+- code: upstream_http_<status>
+  type: upstream_error
+  guidance: Inspect the upstream response body; retry if transient.
+- code: upstream_timeout
+  type: upstream_error
+  guidance: Retry with exponential backoff.
+- code: upstream_request_failed
+  type: upstream_error
+  guidance: Investigate network; retry request.

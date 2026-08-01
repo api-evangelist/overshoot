@@ -1,0 +1,63 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/overshoot-openapi.yaml
+docs: https://docs.overshoot.ai/api-reference/introduction
+authentication:
+  style: 'Bearer API key (Authorization: Bearer ovs_...)'
+  ref: authentication/overshoot-authentication.yml
+  unauthenticated:
+  - GET /models
+  - GET /billing/pricing
+openai_compatibility:
+  description: >-
+    /chat/completions is OpenAI-compatible and permissive — unknown request fields
+    are accepted and ignored. Responses follow the OpenAI chat completions shape
+    (id, object, created, model, choices[], usage). Streaming chunks are supported.
+media_addressing:
+  scheme: ovs://
+  grammar: 'ovs://streams/{stream_id}?<anchor>'
+  frame_anchors:
+  - frame_index
+  - timestamp_ms
+  - offset_ms
+  segment_anchors:
+  - start_/end_ prefixed variants of the frame anchors
+  description: >-
+    Reference any moment of a live stream inside a chat completion by URL — a single
+    frame, a window, or several windows.
+idempotency:
+  request_key_supported: false
+  observed:
+  - >-
+    DELETE /streams/{stream_id} is idempotent on already-deleted streams within the
+    lookup window (repeat deletes succeed). POST endpoints (streams, checkout) do not
+    document an Idempotency-Key header.
+rate_limiting:
+  ref: rate-limits/overshoot-rate-limits.yml
+  headers:
+  - x-ratelimit-limit
+  - x-ratelimit-remaining
+  - x-ratelimit-reset
+  - retry-after
+  status_code: 429
+error_handling:
+  ref: errors/overshoot-problem-types.yml
+  envelopes:
+  - 'stream/billing: { "detail": "<message>" }'
+  - 'chat: { "detail": { "error": { message, type, code } } }'
+  rfc9457: false
+versioning:
+  ref: lifecycle/overshoot-lifecycle.yml
+  style: URI path prefix (/v1beta)
+regions:
+  behavior: >-
+    Requests are regionally routed; a 409 RegionError carries expected_region and
+    requested_region so clients can retarget the correct region and skip the
+    redirect/retry step.
+billing:
+  model: prepaid credits
+  money_unit: integer microcents (1 cent = 1,000,000 microcents)
+  balance_fields:
+  - balance_cents (display)
+  - balance_microcents (exact billing unit)
+  denied: Inference can return 402 when billing denies a request.

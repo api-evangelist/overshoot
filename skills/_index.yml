@@ -1,0 +1,17 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/overshoot-openapi.yaml
+api: Overshoot API
+skills:
+- name: overshoot-live-video-qa
+  file: overshoot-live-video-qa.md
+  description: >-
+    Ask vision-language models questions about a live video feed in real time —
+    create a stream, keep its lease alive, query frames with an OpenAI-compatible
+    chat completion, then end the stream.
+  operations:
+  - createStream
+  - keepaliveStream
+  - chatCompletions
+  - deleteStream
+  - listModels

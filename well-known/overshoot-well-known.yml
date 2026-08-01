@@ -1,0 +1,35 @@
+generated: '2026-07-20'
+method: probed
+source: probe of /.well-known/* on Overshoot hosts
+result: none-found
+notes: >-
+  No usable /.well-known documents were found. platform.overshoot.ai is a single-page
+  app that returns its index shell (HTTP 200) for unknown paths, so a 200 there is not
+  a real security.txt.
+probes:
+- host: api.overshoot.ai
+  path: /.well-known/security.txt
+  status: 404
+- host: api.overshoot.ai
+  path: /.well-known/openid-configuration
+  status: 404
+- host: api.overshoot.ai
+  path: /.well-known/oauth-authorization-server
+  status: 404
+- host: api.overshoot.ai
+  path: /.well-known/api-catalog
+  status: 404
+- host: api.overshoot.ai
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: overshoot.ai
+  path: /.well-known/security.txt
+  status: 404
+- host: overshoot.ai
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: platform.overshoot.ai
+  path: /.well-known/security.txt
+  status: 200
+  valid: false
+  note: SPA index shell, not a real security.txt.

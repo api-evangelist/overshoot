@@ -1,0 +1,28 @@
+{
+  "provider": "overshoot",
+  "sources": [
+    "overshoot-billing-api-openapi.yml",
+    "overshoot-chat-api-openapi.yml",
+    "overshoot-healthz-api-openapi.yml",
+    "overshoot-metrics-api-openapi.yml",
+    "overshoot-models-api-openapi.yml",
+    "overshoot-readyz-api-openapi.yml",
+    "overshoot-streams-api-openapi.yml",
+    "overshoot-v1beta-api-openapi.yml"
+  ],
+  "outputs": [
+    "overshoot-billing-api-openapi.yml",
+    "overshoot-chat-api-openapi.yml",
+    "overshoot-healthz-api-openapi.yml",
+    "overshoot-metrics-api-openapi.yml",
+    "overshoot-models-api-openapi.yml",
+    "overshoot-readyz-api-openapi.yml",
+    "overshoot-streams-api-openapi.yml",
+    "overshoot-v1beta-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

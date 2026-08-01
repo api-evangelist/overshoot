@@ -1,0 +1,110 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/overshoot-openapi.yaml
+entities:
+- name: Stream
+  description: A leased session holding a live video feed, addressable from any chat completion.
+  key: stream_id
+  schemas:
+  - CreateStreamResponse
+  - StreamStatusResponse
+  - KeepaliveResponse
+  - DeleteStreamResponse
+  fields:
+  - id
+  - state
+  - publish (PublishInfo)
+  - expires_at_ms
+  - ttl_seconds
+- name: PublishInfo
+  description: LiveKit connection details returned when a stream is created.
+  fields:
+  - url
+  - token
+- name: Model
+  description: A vision-language model available for inference.
+  key: id
+  schemas:
+  - ModelInfo
+  - ModelsResponse
+  fields:
+  - id
+  - object
+  - created
+  - owned_by
+  - status
+- name: Pricing
+  description: Per-token price for a model, in integer microcents.
+  key: model
+  schemas:
+  - Pricing
+  fields:
+  - id
+  - model
+  - provider
+  - version
+  - input_microcents_per_token
+  - output_microcents_per_token
+  - cached_input_microcents_per_token
+  - public
+- name: ChatCompletion
+  description: An OpenAI-compatible inference request/response over stream frames.
+  schemas:
+  - ChatCompletionRequest
+  - ChatCompletionResponse
+  - ChatCompletionStreamChunk
+  - ChatMessage
+  - ContentPart
+  - ChatCompletionUsage
+  - OvershootMetadata
+  fields:
+  - model
+  - messages
+  - choices
+  - usage
+- name: Balance
+  description: The authenticated user's prepaid balance.
+  schemas:
+  - BalanceResponse
+  fields:
+  - balance_cents
+  - balance_microcents
+- name: Checkout
+  description: A checkout session for buying prepaid credits.
+  schemas:
+  - CheckoutRequest
+  - CheckoutResponse
+  fields:
+  - amount_cents
+relationships:
+- from: Stream
+  to: PublishInfo
+  type: has_one
+  via: publish
+- from: ChatCompletion
+  to: Stream
+  type: belongs_to
+  via: ovs://streams/{stream_id} media URL in messages
+- from: ChatCompletion
+  to: Model
+  type: belongs_to
+  via: model
+- from: Pricing
+  to: Model
+  type: belongs_to
+  via: model
+- from: Checkout
+  to: Balance
+  type: has_one
+  via: prepaid credit top-up
+- from: ChatCompletion
+  to: Balance
+  type: belongs_to
+  via: prepaid-credit debit (402 when denied)
+id_conventions:
+  stream_media_uri: 'ovs://streams/{stream_id}?<anchor>'
+  model_id_examples:
+  - google/gemma-4-26B-A4B-it
+  - Qwen/Qwen3.6-27B-FP8
+  - claude-sonnet-4-6
+  - gpt-5.4

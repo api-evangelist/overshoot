@@ -1,0 +1,49 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for Overshoot API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-07-20'
+  method: generated
+  source: openapi/overshoot-openapi.yaml
+  note: >-
+    Non-destructive overlay capturing API Evangelist enrichment metadata for the
+    Overshoot real-time video understanding API. Applies to openapi/overshoot-openapi.yaml.
+extends: openapi/overshoot-openapi.yaml
+actions:
+- target: $.info
+  update:
+    x-api-evangelist:
+      slug: overshoot
+      category:
+      - real-time-video
+      - vision-language-models
+      - inference
+      backed-by: y-combinator
+      docs: https://docs.overshoot.ai
+      developer-portal: https://platform.overshoot.ai
+- target: $.info
+  update:
+    x-agentic-access:
+      openai-compatible: true
+      chat-completions: /chat/completions
+      mcp: mcp/overshoot-mcp.yml
+      llms-txt: https://docs.overshoot.ai/llms.txt
+- target: $.paths['/chat/completions'].post
+  update:
+    x-conventions:
+      media-uri-scheme: 'ovs://streams/{stream_id}?<anchor>'
+      rate-limit-headers:
+      - x-ratelimit-limit
+      - x-ratelimit-remaining
+      - x-ratelimit-reset
+      - retry-after
+      error-catalog: errors/overshoot-problem-types.yml
+- target: $.paths['/streams/{stream_id}/keepalive'].post
+  update:
+    x-lifecycle:
+      keepalive-interval-seconds: '10-20'
+      stream-lease-expiry-seconds: 45
+- target: $.paths['/models'].get
+  update:
+    x-notes: No authentication required; use the returned id as the model field in inference requests.

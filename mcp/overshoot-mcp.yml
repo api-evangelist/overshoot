@@ -1,0 +1,63 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/overshoot-openapi.yaml
+status: candidate
+official_server: none-found
+notes: >-
+  No official hosted/remote MCP server was found for Overshoot during this pass.
+  The following tool list is a CANDIDATE derived from the published OpenAPI
+  operations, showing how the real-time video API could be exposed to agents via MCP.
+transport: streamable-http (proposed)
+base_url: https://api.overshoot.ai/v1beta
+auth: Bearer API key (ovs_...)
+tools:
+- name: create_stream
+  operationId: createStream
+  method: POST
+  path: /streams
+  description: Create a new video inference stream; returns LiveKit publish url + token.
+- name: get_stream
+  operationId: getStream
+  method: GET
+  path: /streams/{stream_id}
+  description: Inspect the state of a stream.
+- name: keepalive_stream
+  operationId: keepaliveStream
+  method: POST
+  path: /streams/{stream_id}/keepalive
+  description: Renew the stream lease (call every 10-20s) and pay for elapsed streaming time.
+- name: delete_stream
+  operationId: deleteStream
+  method: DELETE
+  path: /streams/{stream_id}
+  description: End a stream and release its resources (idempotent).
+- name: list_models
+  operationId: listModels
+  method: GET
+  path: /models
+  description: List available vision-language models and their availability (no auth).
+- name: chat_completions
+  operationId: chatCompletions
+  method: POST
+  path: /chat/completions
+  description: Query stream frames with a vision-language model (OpenAI-compatible).
+- name: list_pricing
+  operationId: listPricing
+  method: GET
+  path: /billing/pricing
+  description: List public per-model pricing in microcents (no auth).
+- name: get_pricing
+  operationId: getPricing
+  method: GET
+  path: /billing/pricing/{model}
+  description: Get pricing for a single model.
+- name: get_balance
+  operationId: getBalance
+  method: GET
+  path: /billing/accounts/me/balance
+  description: Return the authenticated user's prepaid balance.
+- name: create_checkout
+  operationId: createCheckout
+  method: POST
+  path: /billing/checkout
+  description: Create a checkout session to buy prepaid credits (amount_cents >= 100).

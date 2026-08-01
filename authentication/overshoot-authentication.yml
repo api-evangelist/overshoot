@@ -1,0 +1,33 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/overshoot-openapi.yaml
+docs: https://docs.overshoot.ai/api-reference/authentication
+summary:
+  types:
+  - http
+  style: Bearer API key
+  token_prefix: ovs_
+  key_issuance: https://platform.overshoot.ai/api-keys
+schemes:
+- name: API Key
+  type: http
+  scheme: bearer
+  bearer_format: 'API key (e.g. ovs_...)'
+  header: 'Authorization: Bearer <api_key>'
+  description: >-
+    Every public HTTP request requires an Authorization Bearer header carrying an
+    Overshoot API key (prefix ovs_), issued from the developer dashboard at
+    platform.overshoot.ai/api-keys.
+  sources:
+  - openapi/overshoot-openapi.yaml
+  - openapi/overshoot-inference-service.json
+unauthenticated_endpoints:
+- GET /models
+- GET /billing/pricing
+- GET /billing/pricing/{model}
+notes:
+- '401 means the key is missing, unknown, or revoked.'
+- '403 means the key is valid but cannot access the requested resource.'
+- >-
+  The publish token returned by POST /streams is only for publishing media to
+  LiveKit over WebRTC. It does not replace the API key for HTTP calls.

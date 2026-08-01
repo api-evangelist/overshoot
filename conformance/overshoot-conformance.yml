@@ -1,0 +1,35 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/overshoot-openapi.yaml
+docs: https://docs.overshoot.ai
+standards:
+- id: openai-chat-completions
+  conforms: true
+  evidence: >-
+    POST /chat/completions implements the OpenAI-compatible chat completions
+    contract (model + messages request, choices[]/usage response, streaming chunks,
+    tools/tool_choice/parallel_tool_calls). Request is permissive (unknown fields ignored).
+- id: bearer-token-http-auth
+  conforms: true
+  evidence: 'securitySchemes.bearerAuth is HTTP bearer; Authorization: Bearer <api_key> on every protected operation.'
+- id: webrtc-livekit-ingest
+  conforms: true
+  evidence: POST /streams returns LiveKit publish url + token; frames are published over WebRTC via LiveKit.
+- id: oauth2
+  conforms: false
+  evidence: No OAuth2/OIDC flows; authentication is a static bearer API key.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'Errors use custom {"detail": ...} envelopes, not application/problem+json.'
+- id: rfc8594-deprecation-sunset
+  conforms: false
+  evidence: No Deprecation/Sunset header policy documented.
+- id: rate-limit-headers
+  conforms: true
+  evidence: 429 responses carry x-ratelimit-limit/remaining/reset and retry-after headers.
+- id: idempotency-key
+  conforms: false
+  evidence: No Idempotency-Key request header; only DELETE is naturally idempotent.
+compliance_certifications:
+  published: false
+  notes: No SOC 2 / ISO 27001 / PCI / HIPAA / trust center found during this pass.

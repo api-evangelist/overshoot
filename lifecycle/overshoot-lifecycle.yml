@@ -1,0 +1,32 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/overshoot-openapi.yaml
+docs: https://docs.overshoot.ai/api-reference/introduction
+versioning:
+  style: URI path prefix
+  current: v1beta
+  spec_version: 1.0.0-beta
+  base_url: https://api.overshoot.ai/v1beta
+  notes: >-
+    The API is in beta (1.0.0-beta) and served under the /v1beta path prefix. A
+    parallel inference service is also reachable at api.overshoot.ai/openapi.json
+    (Inference Service 0.4.0) exposing OpenAI-compatible /models and /chat/completions.
+model_lifecycle:
+  description: >-
+    Models advertise a status field via GET /models (values observed: ready,
+    unavailable). Clients should select a model whose status is ready.
+retention:
+  frame_history_window_seconds: 600
+  stream_lease_expiry_seconds: 45
+deprecation:
+  policy_published: false
+  observed:
+  - >-
+    The legacy npm package "overshoot" (v0.2 JS SDK) is marked deprecated; v1 uses
+    REST + LiveKit + OpenAI-compatible chat completions. No formal Sunset/Deprecation
+    header policy (RFC 8594) is documented.
+status_page:
+  published: false
+  notes: No dedicated public status page was found; model availability is exposed via the status field on GET /models.
+sla:
+  published: false

@@ -1,0 +1,41 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/Overshoot-ai
+packages:
+- name: overshoot
+  registry: npm
+  url: https://www.npmjs.com/package/overshoot
+  repository: https://github.com/Overshoot-ai/overshoot-js-sdk
+  language: TypeScript/JavaScript
+  latest: 2.0.0-alpha.8
+  official: true
+  description: >-
+    Official Overshoot JavaScript/TypeScript SDK. The published npm description notes
+    the legacy v0.2 line is deprecated; v1 uses REST, LiveKit, and OpenAI-compatible
+    chat completions (see docs.overshoot.ai). Repo overshoot-js-sdk is the current SDK.
+- name: overshoot
+  registry: PyPI
+  url: https://pypi.org/project/overshoot/
+  repository: https://github.com/Overshoot-ai/overshoot-python
+  language: Python
+  official: true
+  description: >-
+    Official Python distribution name ("Reserved for Overshoot", author Zakaria
+    El hjouji). Source lives in the Overshoot-ai/overshoot-python repository.
+related_repos:
+- name: livekit-vision-agent
+  url: https://github.com/Overshoot-ai/livekit-vision-agent
+  language: Python
+  description: >-
+    Real-time vision agent with LiveKit and Overshoot — watch camera, screen-share,
+    or RTSP video and stream structured JSON with sub-200ms VLM inference.
+- name: vlm-benchmarks
+  url: https://github.com/Overshoot-ai/vlm-benchmarks
+  language: Python
+  description: 2500+ VLM benchmarks, auto-updated daily from arXiv.
+- name: scanner-demo
+  url: https://github.com/Overshoot-ai/scanner-demo
+  language: TypeScript
+- name: gamer-demo
+  url: https://github.com/Overshoot-ai/gamer-demo
+  language: JavaScript

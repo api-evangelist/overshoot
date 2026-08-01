@@ -1,0 +1,32 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.overshoot.ai/api-reference/errors
+docs: https://docs.overshoot.ai/api-reference/limits
+signaling:
+  status_code: 429
+  headers:
+  - name: x-ratelimit-limit
+    meaning: Current per-user RPS ceiling.
+  - name: x-ratelimit-remaining
+    meaning: Requests available in the current window.
+  - name: x-ratelimit-reset
+    meaning: Unix epoch (seconds) when the window resets.
+  - name: retry-after
+    meaning: Recommended delay in seconds before retry (currently 1).
+scope: per-user (per API key)
+limits:
+- name: frame_retention_window
+  value: 600
+  unit: seconds
+  description: >-
+    Stream media URLs can reference frames within the retained history window,
+    currently 600 seconds. Older frames are evicted (frame_evicted).
+- name: stream_lease_expiry
+  value: 45
+  unit: seconds
+  description: >-
+    Streams expire after ~45 seconds without a keepalive; call
+    POST /streams/{id}/keepalive every 10-20 seconds to maintain the lease.
+notes:
+- A numeric per-user RPS ceiling is not published; it is surfaced at runtime via the x-ratelimit-limit header.
+- Retry-After is currently 1 second; clients should still implement exponential backoff.
