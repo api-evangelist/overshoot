@@ -1,0 +1,101 @@
+{
+  "item": [
+    {
+      "id": "65addea0-68fa-4672-9207-52e25462d375",
+      "name": "V1beta",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0b51ca26-3807-4288-83d1-5c7d14b26f22",
+          "name": "List Models",
+          "request": {
+            "name": "List Models",
+            "description": {},
+            "url": {
+              "path": [
+                "v1beta",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ada9a941-4fcf-4252-949f-868b06a060ef",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1beta",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"created\": 9037,\n      \"status\": \"string\",\n      \"object\": \"model\",\n      \"owned_by\": \"overshoot\"\n    },\n    {\n      \"id\": \"string\",\n      \"created\": 6065,\n      \"status\": \"string\",\n      \"object\": \"model\",\n      \"owned_by\": \"overshoot\"\n    }\n  ],\n  \"object\": \"list\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e308b365-8888-4e5e-9baa-90475feed795",
+    "name": "Inference Service Billing V1beta API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Pricing, prepaid balance, and checkout.",
+      "type": "text/plain"
+    }
+  }
+}

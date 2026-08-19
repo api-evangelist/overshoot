@@ -1,0 +1,1057 @@
+{
+  "item": [
+    {
+      "id": "ebeb0e5c-c533-4974-bd2f-143d23908cbb",
+      "name": "Streams",
+      "description": {
+        "content": "Create, inspect, keep alive, and delete live video streams.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "13a19813-367c-4aa9-801a-91332d884e67",
+          "name": "Create stream",
+          "request": {
+            "name": "Create stream",
+            "description": {
+              "content": "Creates a live stream and returns a publish token. The current request body is\nempty. The retained frame history is fixed at 600 seconds.\n\nThe publish token is scoped to this stream and grants media publish permissions.\nRenew it through [`/keepalive`](#tag/Streams/operation/keepaliveStream) before it\nexpires.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "streams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                "key": "X-Overshoot-Region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e2bc94d7-18e0-4372-b3cd-d1837dae0637",
+              "name": "Stream created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The region that served this request.",
+                  "key": "X-Overshoot-Region",
+                  "value": "us-central1"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"197a8f22-763a-1a1d-9466-bf9c1728b170\",\n  \"state\": \"active\",\n  \"publish\": {\n    \"type\": \"livekit\",\n    \"url\": \"string\",\n    \"token\": \"string\"\n  },\n  \"expires_at_ms\": 7979,\n  \"ttl_seconds\": 300\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "618005cc-0f1d-4754-9e11-015bf63a593a",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "480dde21-b203-45ec-be59-eacbb3c0f414",
+              "name": "API key has no associated user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e145870-3409-473c-bf64-d3a823c7bf95",
+              "name": "Wrong region.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": {\n    \"error\": \"region_error\",\n    \"expected_region\": \"us-west1\",\n    \"requested_region\": \"us-central1\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95193423-6935-4114-bea9-bb22f2fe5593",
+              "name": "Stream creation temporarily unavailable.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f400dc2e-328b-4bf4-8ec2-faef0ab199d6",
+          "name": "Get stream",
+          "request": {
+            "name": "Get stream",
+            "description": {
+              "content": "Returns current stream status and frame telemetry.\n\n`stream_time_ms` is zero until the first frame arrives. After that, it is measured\nfrom the first captured frame. When a stream ends, live counters and timestamps\nare snapshotted — `GET /streams/{id}` on an ended stream returns those final\nvalues; fields may be `null` if the stream ended before the value existed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "streams",
+                ":stream_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "stream_id",
+                  "description": "(Required) UUID returned by `POST /streams`."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                "key": "X-Overshoot-Region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1332308c-a953-4f68-b1c3-a66f48da164b",
+              "name": "Stream state.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The region that served this request.",
+                  "key": "X-Overshoot-Region",
+                  "value": "us-central1"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"13a3e993-a596-838f-b648-69452c161bcb\",\n  \"state\": \"ended\",\n  \"stream_time_ms\": 7732.912940756849,\n  \"first_frame_at_ms\": 9014,\n  \"last_frame_at_ms\": 7524,\n  \"last_frame_index\": 3712,\n  \"first_available_frame_at_ms\": 2072,\n  \"first_available_frame_index\": 1632,\n  \"created_at_ms\": 8823,\n  \"recent_fps\": 7191.472814610293,\n  \"retained_frame_count\": 8174,\n  \"evicted_frame_count\": 1341,\n  \"expires_at_ms\": 3762,\n  \"ttl_seconds\": 3924,\n  \"ended_at_ms\": 6735,\n  \"end_reason\": \"deleted\",\n  \"audio\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f57a8c5-0eea-480d-8ce4-1d9bf6899e67",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b68109b-0fbf-423b-a992-4c7006cb7380",
+              "name": "Stream unknown, expired, deleted, or owned by a different user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87e32bfd-4ae2-49a5-9b45-09f6837b1c10",
+              "name": "Wrong region.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": {\n    \"error\": \"region_error\",\n    \"expected_region\": \"us-west1\",\n    \"requested_region\": \"us-central1\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb359311-f093-4d60-bb3f-e48d48483990",
+          "name": "Delete stream",
+          "request": {
+            "name": "Delete stream",
+            "description": {
+              "content": "Request stream deletion.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "streams",
+                ":stream_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "stream_id",
+                  "description": "(Required) UUID returned by `POST /streams`."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                "key": "X-Overshoot-Region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "be3da5df-0cb2-4af0-ab2d-6ed8b4be7798",
+              "name": "Delete acknowledged.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The region that served this request.",
+                  "key": "X-Overshoot-Region",
+                  "value": "us-central1"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"cfd76648-0ee7-45c8-cf23-6e5d3a1cd6e0\",\n  \"deleted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81fd2960-849f-49f1-9eb2-1b2d64d74d18",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6dc4098-693f-4628-ab88-949776be9205",
+              "name": "Stream unknown, expired, deleted, or owned by a different user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f7cc97d-7900-4725-b691-b3205b781231",
+              "name": "Wrong region.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": {\n    \"error\": \"region_error\",\n    \"expected_region\": \"us-west1\",\n    \"requested_region\": \"us-central1\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "870d0130-3479-4142-a597-70fa9c0eec3e",
+          "name": "Renew stream lease",
+          "request": {
+            "name": "Renew stream lease",
+            "description": {
+              "content": "Renews the stream lease and returns a fresh publish token. Clients should renew\nbefore the 5-minute lease expires, for example every 4 minutes, and pass the\nreturned token to the LiveKit SDK with `room.updateToken(...)`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "streams",
+                ":stream_id",
+                "keepalive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "stream_id",
+                  "description": "(Required) UUID returned by `POST /streams`."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                "key": "X-Overshoot-Region",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a8f04432-d37a-479a-8701-5a40544204fc",
+              "name": "Lease renewed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id",
+                    "keepalive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The region that served this request.",
+                  "key": "X-Overshoot-Region",
+                  "value": "us-central1"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"2c8f88b3-4f1b-a643-12f9-2200caa2294f\",\n  \"expires_at_ms\": 9300,\n  \"ttl_seconds\": 300,\n  \"publish\": {\n    \"type\": \"livekit\",\n    \"url\": \"string\",\n    \"token\": \"string\"\n  },\n  \"stream_time_ms\": 36.66174879655482\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5937de2-874b-48b8-857f-6a34b8a68f2e",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id",
+                    "keepalive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9dd6c3f2-3366-4955-aa91-fbd908c4f3ca",
+              "name": "Stream unknown, expired, deleted, or owned by a different user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id",
+                    "keepalive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "629e33fd-5991-4877-a16c-1d22de4b5a7b",
+              "name": "Wrong region.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "streams",
+                    ":stream_id",
+                    "keepalive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "stream_id",
+                      "description": "(Required) UUID returned by `POST /streams`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Optional hint to route the request to the region that owns the stream. If the\nrequest reaches the wrong region the API returns `409` with a `region_error` body.\n",
+                    "key": "X-Overshoot-Region",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": {\n    \"error\": \"region_error\",\n    \"expected_region\": \"us-west1\",\n    \"requested_region\": \"us-central1\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d68f46d6-5d9e-4c19-9f77-8e82da0da618",
+    "name": "Inference Service Billing Streams API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Pricing, prepaid balance, and checkout.",
+      "type": "text/plain"
+    }
+  }
+}

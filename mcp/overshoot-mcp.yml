@@ -3,10 +3,9 @@ method: derived
 source: openapi/overshoot-openapi.yaml
 status: candidate
 official_server: none-found
-notes: >-
-  No official hosted/remote MCP server was found for Overshoot during this pass.
-  The following tool list is a CANDIDATE derived from the published OpenAPI
-  operations, showing how the real-time video API could be exposed to agents via MCP.
+notes: No official hosted/remote MCP server was found for Overshoot during this pass. The following tool
+  list is a CANDIDATE derived from the published OpenAPI operations, showing how the real-time video API
+  could be exposed to agents via MCP.
 transport: streamable-http (proposed)
 base_url: https://api.overshoot.ai/v1beta
 auth: Bearer API key (ovs_...)
@@ -61,3 +60,9 @@ tools:
   method: POST
   path: /billing/checkout
   description: Create a checkout session to buy prepaid credits (amount_cents >= 100).
+deployment:
+  mode: none
+  verified: derived
+  tools: 10
+  checked: '2026-08-12'
+  source: catalog MCP census
