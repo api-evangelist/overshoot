@@ -7,6 +7,18 @@ description: Overshoot is a real-time video understanding API. Developers create
   stream lifecycle management, model listing, prepaid-credit billing, and per-model pricing over a single
   REST host at api.overshoot.ai.
 url: https://raw.githubusercontent.com/api-evangelist/overshoot/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
