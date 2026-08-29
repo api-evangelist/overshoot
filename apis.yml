@@ -154,6 +154,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/overshoot-capability-edges.yml
+  name: Overshoot Business Capability Map
 - type: DomainSecurity
   url: security/overshoot-domain-security.yml
 - type: DeveloperPortal
