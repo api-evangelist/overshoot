@@ -1,28 +1,51 @@
 {
   "provider": "overshoot",
   "sources": [
-    "overshoot-billing-api-openapi.yml",
-    "overshoot-chat-api-openapi.yml",
-    "overshoot-healthz-api-openapi.yml",
-    "overshoot-metrics-api-openapi.yml",
-    "overshoot-models-api-openapi.yml",
-    "overshoot-readyz-api-openapi.yml",
-    "overshoot-streams-api-openapi.yml",
-    "overshoot-v1beta-api-openapi.yml"
+    "_original/overshoot-inference-service.json",
+    "_original/overshoot-openapi.yaml"
   ],
   "outputs": [
-    "overshoot-billing-api-openapi.yml",
     "overshoot-chat-api-openapi.yml",
     "overshoot-healthz-api-openapi.yml",
     "overshoot-metrics-api-openapi.yml",
     "overshoot-models-api-openapi.yml",
     "overshoot-readyz-api-openapi.yml",
-    "overshoot-streams-api-openapi.yml",
-    "overshoot-v1beta-api-openapi.yml"
+    "overshoot-v1beta-api-openapi.yml",
+    "overshoot-billing-api-openapi.yml",
+    "overshoot-streams-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "overshoot-inference-service.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0; renamed 1 component key(s) illegal in 3.x (e.g. API Key)",
+    "overshoot-inference-service.json: tagged paths GET /healthz -> Healthz",
+    "overshoot-inference-service.json: tagged paths GET /readyz -> Readyz",
+    "overshoot-inference-service.json: tagged paths GET /metrics -> Metrics",
+    "overshoot-inference-service.json: tagged paths GET /v1beta/models -> V1beta",
+    "overshoot-inference-service.json: tagged paths GET /v1/models -> Models",
+    "overshoot-inference-service.json: tagged paths GET /models -> Models",
+    "overshoot-inference-service.json: tagged paths POST /chat/completions -> Chat",
+    "overshoot-inference-service.json: declared missing tag: Chat",
+    "overshoot-inference-service.json: declared missing tag: Healthz",
+    "overshoot-inference-service.json: declared missing tag: Metrics",
+    "overshoot-inference-service.json: declared missing tag: Models",
+    "overshoot-inference-service.json: declared missing tag: Readyz",
+    "overshoot-inference-service.json: declared missing tag: V1beta",
+    "overshoot-openapi.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tag 'Chat' spans 2 source specs (overshoot-inference-service.json, overshoot-openapi.yaml): per-path servers applied",
+    "tag 'Models' spans 2 source specs (overshoot-inference-service.json, overshoot-openapi.yaml): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "overshoot-billing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "overshoot-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "overshoot-healthz-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "overshoot-metrics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "overshoot-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "overshoot-readyz-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "overshoot-streams-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "overshoot-v1beta-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
