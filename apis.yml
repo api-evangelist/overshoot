@@ -46,7 +46,7 @@ modified: '2026-07-20'
 tags:
 - Company
 - Artificial Intelligence
-- Computer-Vision
+- Computer Vision
 - Video
 - Video Understanding
 - Vision Language Models
@@ -55,7 +55,7 @@ tags:
 - WebRTC
 - Inference
 - Multi-Modal
-- Machine-Learning
+- Machine Learning
 tags_raw:
 - Company
 - Artificial Intelligence
@@ -69,6 +69,8 @@ tags_raw:
 - Inference
 - Multimodal
 - Machine Learning
+- Computer-Vision
+- Machine-Learning
 apis:
 - aid: overshoot:overshoot-billing-api
   name: Overshoot Billing API
