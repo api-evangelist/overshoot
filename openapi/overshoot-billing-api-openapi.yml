@@ -133,15 +133,6 @@ paths:
                 $ref: '#/components/schemas/ValidationError'
 components:
   schemas:
-    CheckoutRequest:
-      type: object
-      properties:
-        amount_cents:
-          type: integer
-          minimum: 100
-          description: Amount to charge, in cents. Must be at least `100`.
-      required:
-      - amount_cents
     ValidationError:
       type: object
       description: Validation failure shape used by chat completions and billing.
@@ -165,30 +156,14 @@ components:
                 type: string
               type:
                 type: string
-    Error:
-      type: object
-      description: Standard error body used by stream-lifecycle and billing endpoints.
-      properties:
-        detail:
-          type: string
-      required:
-      - detail
-    BalanceResponse:
+    CheckoutResponse:
       type: object
       properties:
-        user_id:
+        url:
           type: string
-          format: uuid
-        balance_microcents:
-          type: integer
-          description: Exact billing unit. `1 cent = 1,000,000 microcents`.
-        balance_cents:
-          type: integer
-          description: Display value.
+          description: Hosted checkout URL.
       required:
-      - user_id
-      - balance_microcents
-      - balance_cents
+      - url
     Pricing:
       type: object
       properties:
@@ -224,14 +199,39 @@ components:
       - input_microcents_per_token
       - output_microcents_per_token
       - public
-    CheckoutResponse:
+    Error:
+      type: object
+      description: Standard error body used by stream-lifecycle and billing endpoints.
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
+    BalanceResponse:
       type: object
       properties:
-        url:
+        user_id:
           type: string
-          description: Hosted checkout URL.
+          format: uuid
+        balance_microcents:
+          type: integer
+          description: Exact billing unit. `1 cent = 1,000,000 microcents`.
+        balance_cents:
+          type: integer
+          description: Display value.
       required:
-      - url
+      - user_id
+      - balance_microcents
+      - balance_cents
+    CheckoutRequest:
+      type: object
+      properties:
+        amount_cents:
+          type: integer
+          minimum: 100
+          description: Amount to charge, in cents. Must be at least `100`.
+      required:
+      - amount_cents
   securitySchemes:
     bearerAuth:
       type: http

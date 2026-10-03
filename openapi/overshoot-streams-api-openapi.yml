@@ -194,7 +194,109 @@ paths:
               schema:
                 $ref: '#/components/schemas/RegionError'
 components:
+  parameters:
+    StreamId:
+      name: stream_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: UUID returned by `POST /streams`.
+    RegionHeader:
+      name: X-Overshoot-Region
+      in: header
+      required: false
+      schema:
+        type: string
+        enum:
+        - us-west1
+        - us-central1
+      description: 'Optional hint to route the request to the region that owns the stream. If the
+
+        request reaches the wrong region the API returns `409` with a `region_error` body.
+
+        '
   schemas:
+    CreateStreamResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique stream identifier. Use this in every subsequent stream URL.
+        state:
+          type: string
+          enum:
+          - active
+          description: Always `active` for a freshly created stream.
+        publish:
+          $ref: '#/components/schemas/PublishInfo'
+        expires_at_ms:
+          type: integer
+          description: Wall-clock Unix ms when the lease will expire if not renewed via `/keepalive`.
+        ttl_seconds:
+          type: integer
+          example: 300
+          description: Lease TTL in seconds. Currently `300` for all streams.
+      required:
+      - id
+      - state
+      - publish
+      - expires_at_ms
+      - ttl_seconds
+    KeepaliveResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        expires_at_ms:
+          type: integer
+        ttl_seconds:
+          type: integer
+          example: 300
+        stream_time_ms:
+          type: number
+          description: Current stream-clock position in ms.
+        publish:
+          $ref: '#/components/schemas/PublishInfo'
+      required:
+      - id
+      - expires_at_ms
+      - ttl_seconds
+      - publish
+    DeleteStreamResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        deleted:
+          type: boolean
+          example: true
+      required:
+      - id
+      - deleted
+    PublishInfo:
+      type: object
+      description: WebRTC publish target. Connect with the LiveKit client SDK.
+      properties:
+        type:
+          type: string
+          enum:
+          - livekit
+          default: livekit
+        url:
+          type: string
+          description: LiveKit room URL (`wss://...`).
+        token:
+          type: string
+          description: Short-lived publish JWT for the LiveKit client.
+      required:
+      - type
+      - url
+      - token
     StreamStatusResponse:
       type: object
       properties:
@@ -292,81 +394,6 @@ components:
       required:
       - id
       - state
-    PublishInfo:
-      type: object
-      description: WebRTC publish target. Connect with the LiveKit client SDK.
-      properties:
-        type:
-          type: string
-          enum:
-          - livekit
-          default: livekit
-        url:
-          type: string
-          description: LiveKit room URL (`wss://...`).
-        token:
-          type: string
-          description: Short-lived publish JWT for the LiveKit client.
-      required:
-      - type
-      - url
-      - token
-    KeepaliveResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        expires_at_ms:
-          type: integer
-        ttl_seconds:
-          type: integer
-          example: 300
-        stream_time_ms:
-          type: number
-          description: Current stream-clock position in ms.
-        publish:
-          $ref: '#/components/schemas/PublishInfo'
-      required:
-      - id
-      - expires_at_ms
-      - ttl_seconds
-      - publish
-    CreateStreamResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique stream identifier. Use this in every subsequent stream URL.
-        state:
-          type: string
-          enum:
-          - active
-          description: Always `active` for a freshly created stream.
-        publish:
-          $ref: '#/components/schemas/PublishInfo'
-        expires_at_ms:
-          type: integer
-          description: Wall-clock Unix ms when the lease will expire if not renewed via `/keepalive`.
-        ttl_seconds:
-          type: integer
-          example: 300
-          description: Lease TTL in seconds. Currently `300` for all streams.
-      required:
-      - id
-      - state
-      - publish
-      - expires_at_ms
-      - ttl_seconds
-    Error:
-      type: object
-      description: Standard error body used by stream-lifecycle and billing endpoints.
-      properties:
-        detail:
-          type: string
-      required:
-      - detail
     RegionError:
       type: object
       description: Returned on `409` when the request reaches the wrong region.
@@ -385,18 +412,14 @@ components:
               - string
               - 'null'
               example: us-central1
-    DeleteStreamResponse:
+    Error:
       type: object
+      description: Standard error body used by stream-lifecycle and billing endpoints.
       properties:
-        id:
+        detail:
           type: string
-          format: uuid
-        deleted:
-          type: boolean
-          example: true
       required:
-      - id
-      - deleted
+      - detail
   headers:
     RegionResponseHeader:
       description: The region that served this request.
@@ -405,29 +428,6 @@ components:
         enum:
         - us-west1
         - us-central1
-  parameters:
-    RegionHeader:
-      name: X-Overshoot-Region
-      in: header
-      required: false
-      schema:
-        type: string
-        enum:
-        - us-west1
-        - us-central1
-      description: 'Optional hint to route the request to the region that owns the stream. If the
-
-        request reaches the wrong region the API returns `409` with a `region_error` body.
-
-        '
-    StreamId:
-      name: stream_id
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-      description: UUID returned by `POST /streams`.
   securitySchemes:
     bearerAuth:
       type: http

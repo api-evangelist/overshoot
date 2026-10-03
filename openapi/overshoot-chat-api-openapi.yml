@@ -36,6 +36,41 @@ paths:
       - Chat
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ChatCompletionRequest:
       properties:
         model:
@@ -93,336 +128,6 @@ components:
       - messages
       title: ChatCompletionRequest
       description: OpenAI-compatible chat completions request. Permissive — unknown fields are accepted and ignored.
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ChatCompletionStreamChunk:
-      type: object
-      description: 'A single `data:` payload in an SSE response. The stream is terminated by
-
-        `data: [DONE]`. The final chunk (when `stream_options.include_usage: true`)
-
-        carries `usage` and `overshoot.cache`.
-
-        '
-      properties:
-        choices:
-          type: array
-          items:
-            type: object
-            properties:
-              delta:
-                type: object
-                properties:
-                  role:
-                    type: string
-                  content:
-                    type: string
-                  tool_calls:
-                    type: array
-                    items:
-                      type: object
-                      additionalProperties: true
-              finish_reason:
-                type:
-                - string
-                - 'null'
-        usage:
-          allOf:
-          - $ref: '#/components/schemas/ChatCompletionUsage'
-        overshoot:
-          $ref: '#/components/schemas/OvershootMetadata'
-    TextPart:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - text
-        text:
-          type: string
-      required:
-      - type
-      - text
-    ValidationError_2:
-      type: object
-      description: Validation failure shape used by chat completions and billing.
-      properties:
-        error:
-          type: string
-          example: validation_error
-        message:
-          type: string
-          example: Request validation failed
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              loc:
-                type: array
-                items:
-                  type: string
-              msg:
-                type: string
-              type:
-                type: string
-    Error:
-      type: object
-      description: Standard error body used by stream-lifecycle and billing endpoints.
-      properties:
-        detail:
-          type: string
-      required:
-      - detail
-    ChatCompletionChoice:
-      type: object
-      properties:
-        index:
-          type: integer
-        message:
-          type: object
-          properties:
-            role:
-              type: string
-              example: assistant
-            content:
-              type:
-              - string
-              - 'null'
-            tool_calls:
-              type: array
-              items:
-                type: object
-                additionalProperties: true
-              description: OpenAI-style tool calls. Present when the model emits any.
-          required:
-          - role
-        finish_reason:
-          type:
-          - string
-          - 'null'
-          enum:
-          - stop
-          - length
-          - tool_calls
-          - content_filter
-      required:
-      - index
-      - message
-    UpstreamError:
-      type:
-      - object
-      - 'null'
-      description: Present on `upstream_*` codes. Preserves the provider status and a bounded response body when available.
-      properties:
-        provider:
-          type: string
-          example: google
-        status:
-          type: integer
-          example: 400
-        body:
-          type: object
-          additionalProperties: true
-          description: Bounded provider response body.
-        rate_limits:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-    ContentPart:
-      oneOf:
-      - $ref: '#/components/schemas/TextPart'
-      - $ref: '#/components/schemas/ImageUrlPart'
-      - $ref: '#/components/schemas/VideoUrlPart'
-    VideoUrlPart:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - video_url
-        video_url:
-          type: object
-          properties:
-            url:
-              type: string
-              description: 'HTTPS video URL, `data:` URL, or Overshoot stream segment reference like
-
-                `ovs://streams/{stream_id}?start_offset_ms=-5000`. Required query:
-
-                exactly one `start_*` anchor. Optional end anchor (defaults to live edge),
-
-                optional `max_fps` (default `1.0`).
-
-                '
-          required:
-          - url
-      required:
-      - type
-      - video_url
-    ChatError:
-      type: object
-      description: 'Error envelope used by `/chat/completions`. The inner `error.code` identifies the
-
-        specific failure (see the Errors guide for the full list of codes such as
-
-        `stream_not_found`, `frame_evicted`, `upstream_http_<status>`, etc.).
-
-        '
-      properties:
-        detail:
-          type: object
-          properties:
-            error:
-              type: object
-              properties:
-                message:
-                  type: string
-                  example: 'Stream not found: <stream_id>'
-                type:
-                  type: string
-                  enum:
-                  - stream_error
-                  - validation_error
-                  - provider_error
-                  - upstream_error
-                  - billing_error
-                  - rate_limit_error
-                  - internal_error
-                  example: stream_error
-                code:
-                  type: string
-                  description: 'Specific failure code. Known values include:
-
-                    `stream_url_invalid`, `query_param_invalid`, `stream_not_found`,
-
-                    `stream_unauthorized`, `segment_empty`, `segment_invalid`,
-
-                    `frame_evicted`, `frame_not_yet_produced`, `model_unavailable`,
-
-                    `model_video_unsupported`, `provider_safety_block`, `billing_denied`,
-
-                    `upstream_http_<status>`, `upstream_timeout`,
-
-                    `upstream_request_failed`.
-
-                    '
-                  example: stream_not_found
-                upstream:
-                  $ref: '#/components/schemas/UpstreamError'
-              required:
-              - message
-              - type
-              - code
-          required:
-          - error
-    ChatCompletionResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          default: chat.completion
-        created:
-          type: integer
-        model:
-          type: string
-        choices:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChatCompletionChoice'
-        usage:
-          $ref: '#/components/schemas/ChatCompletionUsage'
-        overshoot:
-          $ref: '#/components/schemas/OvershootMetadata'
-      required:
-      - id
-      - object
-      - created
-      - model
-      - choices
-    OvershootMetadata:
-      type: object
-      description: Overshoot-specific response metadata. Observability only.
-      properties:
-        cache:
-          type: object
-          properties:
-            thread_id:
-              type:
-              - string
-              - 'null'
-              description: The `thread_id` you supplied, or `null`.
-            cache_hit:
-              type: boolean
-              description: '`true` when cached prompt tokens were reported.'
-            cached_input_tokens:
-              type: integer
-              description: Prompt tokens served from prefix cache.
-    ChatMessage:
-      type: object
-      properties:
-        role:
-          type: string
-          enum:
-          - system
-          - user
-          - assistant
-          - tool
-        content:
-          oneOf:
-          - type: string
-          - type: array
-            items:
-              $ref: '#/components/schemas/ContentPart'
-      required:
-      - role
-      - content
-    ChatCompletionUsage:
-      type: object
-      properties:
-        prompt_tokens:
-          type: integer
-          description: Tokens in the request — text plus visual tokens from any frames or segments.
-        completion_tokens:
-          type: integer
-        total_tokens:
-          type: integer
     ChatCompletionRequest_2:
       type: object
       description: 'OpenAI-compatible. Permissive — unknown fields are accepted for SDK compatibility.
@@ -522,9 +227,304 @@ components:
       required:
       - type
       - image_url
+    ChatMessage:
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+          - system
+          - user
+          - assistant
+          - tool
+        content:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              $ref: '#/components/schemas/ContentPart'
+      required:
+      - role
+      - content
+    ContentPart:
+      oneOf:
+      - $ref: '#/components/schemas/TextPart'
+      - $ref: '#/components/schemas/ImageUrlPart'
+      - $ref: '#/components/schemas/VideoUrlPart'
+    ChatCompletionUsage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+          description: Tokens in the request — text plus visual tokens from any frames or segments.
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+    VideoUrlPart:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - video_url
+        video_url:
+          type: object
+          properties:
+            url:
+              type: string
+              description: 'HTTPS video URL, `data:` URL, or Overshoot stream segment reference like
+
+                `ovs://streams/{stream_id}?start_offset_ms=-5000`. Required query:
+
+                exactly one `start_*` anchor. Optional end anchor (defaults to live edge),
+
+                optional `max_fps` (default `1.0`).
+
+                '
+          required:
+          - url
+      required:
+      - type
+      - video_url
+    ChatCompletionStreamChunk:
+      type: object
+      description: 'A single `data:` payload in an SSE response. The stream is terminated by
+
+        `data: [DONE]`. The final chunk (when `stream_options.include_usage: true`)
+
+        carries `usage` and `overshoot.cache`.
+
+        '
+      properties:
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              delta:
+                type: object
+                properties:
+                  role:
+                    type: string
+                  content:
+                    type: string
+                  tool_calls:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: true
+              finish_reason:
+                type:
+                - string
+                - 'null'
+        usage:
+          allOf:
+          - $ref: '#/components/schemas/ChatCompletionUsage'
+        overshoot:
+          $ref: '#/components/schemas/OvershootMetadata'
+    ChatCompletionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          default: chat.completion
+        created:
+          type: integer
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatCompletionChoice'
+        usage:
+          $ref: '#/components/schemas/ChatCompletionUsage'
+        overshoot:
+          $ref: '#/components/schemas/OvershootMetadata'
+      required:
+      - id
+      - object
+      - created
+      - model
+      - choices
+    UpstreamError:
+      type:
+      - object
+      - 'null'
+      description: Present on `upstream_*` codes. Preserves the provider status and a bounded response body when available.
+      properties:
+        provider:
+          type: string
+          example: google
+        status:
+          type: integer
+          example: 400
+        body:
+          type: object
+          additionalProperties: true
+          description: Bounded provider response body.
+        rate_limits:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+    ChatError:
+      type: object
+      description: 'Error envelope used by `/chat/completions`. The inner `error.code` identifies the
+
+        specific failure (see the Errors guide for the full list of codes such as
+
+        `stream_not_found`, `frame_evicted`, `upstream_http_<status>`, etc.).
+
+        '
+      properties:
+        detail:
+          type: object
+          properties:
+            error:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: 'Stream not found: <stream_id>'
+                type:
+                  type: string
+                  enum:
+                  - stream_error
+                  - validation_error
+                  - provider_error
+                  - upstream_error
+                  - billing_error
+                  - rate_limit_error
+                  - internal_error
+                  example: stream_error
+                code:
+                  type: string
+                  description: 'Specific failure code. Known values include:
+
+                    `stream_url_invalid`, `query_param_invalid`, `stream_not_found`,
+
+                    `stream_unauthorized`, `segment_empty`, `segment_invalid`,
+
+                    `frame_evicted`, `frame_not_yet_produced`, `model_unavailable`,
+
+                    `model_video_unsupported`, `provider_safety_block`, `billing_denied`,
+
+                    `upstream_http_<status>`, `upstream_timeout`,
+
+                    `upstream_request_failed`.
+
+                    '
+                  example: stream_not_found
+                upstream:
+                  $ref: '#/components/schemas/UpstreamError'
+              required:
+              - message
+              - type
+              - code
+          required:
+          - error
+    OvershootMetadata:
+      type: object
+      description: Overshoot-specific response metadata. Observability only.
+      properties:
+        cache:
+          type: object
+          properties:
+            thread_id:
+              type:
+              - string
+              - 'null'
+              description: The `thread_id` you supplied, or `null`.
+            cache_hit:
+              type: boolean
+              description: '`true` when cached prompt tokens were reported.'
+            cached_input_tokens:
+              type: integer
+              description: Prompt tokens served from prefix cache.
+    TextPart:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - text
+        text:
+          type: string
+      required:
+      - type
+      - text
+    ChatCompletionChoice:
+      type: object
+      properties:
+        index:
+          type: integer
+        message:
+          type: object
+          properties:
+            role:
+              type: string
+              example: assistant
+            content:
+              type:
+              - string
+              - 'null'
+            tool_calls:
+              type: array
+              items:
+                type: object
+                additionalProperties: true
+              description: OpenAI-style tool calls. Present when the model emits any.
+          required:
+          - role
+        finish_reason:
+          type:
+          - string
+          - 'null'
+          enum:
+          - stop
+          - length
+          - tool_calls
+          - content_filter
+      required:
+      - index
+      - message
+    ValidationError_2:
+      type: object
+      description: Validation failure shape used by chat completions and billing.
+      properties:
+        error:
+          type: string
+          example: validation_error
+        message:
+          type: string
+          example: Request validation failed
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              loc:
+                type: array
+                items:
+                  type: string
+              msg:
+                type: string
+              type:
+                type: string
+    Error:
+      type: object
+      description: Standard error body used by stream-lifecycle and billing endpoints.
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
   headers:
-    RateLimitLimit:
-      description: Current per-user request-per-second limit.
+    RetryAfter:
+      description: Seconds to wait before retrying. Present on 429; currently `1`.
       schema:
         type: integer
     RateLimitRemaining:
@@ -538,8 +538,8 @@ components:
         enum:
         - us-west1
         - us-central1
-    RetryAfter:
-      description: Seconds to wait before retrying. Present on 429; currently `1`.
+    RateLimitLimit:
+      description: Current per-user request-per-second limit.
       schema:
         type: integer
     RateLimitReset:
