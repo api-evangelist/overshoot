@@ -82,16 +82,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/overshoot-billing-api-openapi.yml
-- aid: overshoot:overshoot-chat-api
-  name: Overshoot Chat API
-  description: The Chat API from Overshoot — 1 operation(s) for chat.
-  humanURL: https://docs.overshoot.ai
-  baseURL: https://api.overshoot.ai/v1beta
-  tags:
-  - Chat
-  properties:
-  - type: OpenAPI
-    url: openapi/overshoot-chat-api-openapi.yml
 - aid: overshoot:overshoot-healthz-api
   name: Overshoot Healthz API
   description: The Healthz API from Overshoot — 1 operation(s) for healthz.
@@ -152,6 +142,16 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/overshoot-v1beta-api-openapi.yml
+- aid: overshoot:overshoot-chat-completions-api
+  name: Overshoot Chat Completions API
+  description: The Chat Completions API from Overshoot — 1 operation(s) for chat completions.
+  humanURL: https://docs.overshoot.ai
+  baseURL: https://api.overshoot.ai/v1beta
+  tags:
+  - Chat Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/overshoot-chat-completions-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

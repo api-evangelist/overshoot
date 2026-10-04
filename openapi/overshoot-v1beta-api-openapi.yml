@@ -20,21 +20,6 @@ paths:
       - V1beta
 components:
   schemas:
-    OpenAIModelsResponse:
-      properties:
-        object:
-          type: string
-          title: Object
-          default: list
-        data:
-          items:
-            $ref: '#/components/schemas/OpenAIModelInfo'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: OpenAIModelsResponse
     OpenAIModelInfo:
       properties:
         id:
@@ -60,6 +45,21 @@ components:
       - created
       - status
       title: OpenAIModelInfo
+    OpenAIModelsResponse:
+      properties:
+        object:
+          type: string
+          title: Object
+          default: list
+        data:
+          items:
+            $ref: '#/components/schemas/OpenAIModelInfo'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: OpenAIModelsResponse
   securitySchemes:
     API_Key:
       type: http

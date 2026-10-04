@@ -195,14 +195,6 @@ paths:
                 $ref: '#/components/schemas/RegionError'
 components:
   parameters:
-    StreamId:
-      name: stream_id
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-      description: UUID returned by `POST /streams`.
     RegionHeader:
       name: X-Overshoot-Region
       in: header
@@ -217,34 +209,34 @@ components:
         request reaches the wrong region the API returns `409` with a `region_error` body.
 
         '
+    StreamId:
+      name: stream_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: UUID returned by `POST /streams`.
   schemas:
-    CreateStreamResponse:
+    PublishInfo:
       type: object
+      description: WebRTC publish target. Connect with the LiveKit client SDK.
       properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique stream identifier. Use this in every subsequent stream URL.
-        state:
+        type:
           type: string
           enum:
-          - active
-          description: Always `active` for a freshly created stream.
-        publish:
-          $ref: '#/components/schemas/PublishInfo'
-        expires_at_ms:
-          type: integer
-          description: Wall-clock Unix ms when the lease will expire if not renewed via `/keepalive`.
-        ttl_seconds:
-          type: integer
-          example: 300
-          description: Lease TTL in seconds. Currently `300` for all streams.
+          - livekit
+          default: livekit
+        url:
+          type: string
+          description: LiveKit room URL (`wss://...`).
+        token:
+          type: string
+          description: Short-lived publish JWT for the LiveKit client.
       required:
-      - id
-      - state
-      - publish
-      - expires_at_ms
-      - ttl_seconds
+      - type
+      - url
+      - token
     KeepaliveResponse:
       type: object
       properties:
@@ -266,6 +258,14 @@ components:
       - expires_at_ms
       - ttl_seconds
       - publish
+    Error:
+      type: object
+      description: Standard error body used by stream-lifecycle and billing endpoints.
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
     DeleteStreamResponse:
       type: object
       properties:
@@ -278,25 +278,6 @@ components:
       required:
       - id
       - deleted
-    PublishInfo:
-      type: object
-      description: WebRTC publish target. Connect with the LiveKit client SDK.
-      properties:
-        type:
-          type: string
-          enum:
-          - livekit
-          default: livekit
-        url:
-          type: string
-          description: LiveKit room URL (`wss://...`).
-        token:
-          type: string
-          description: Short-lived publish JWT for the LiveKit client.
-      required:
-      - type
-      - url
-      - token
     StreamStatusResponse:
       type: object
       properties:
@@ -394,6 +375,33 @@ components:
       required:
       - id
       - state
+    CreateStreamResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique stream identifier. Use this in every subsequent stream URL.
+        state:
+          type: string
+          enum:
+          - active
+          description: Always `active` for a freshly created stream.
+        publish:
+          $ref: '#/components/schemas/PublishInfo'
+        expires_at_ms:
+          type: integer
+          description: Wall-clock Unix ms when the lease will expire if not renewed via `/keepalive`.
+        ttl_seconds:
+          type: integer
+          example: 300
+          description: Lease TTL in seconds. Currently `300` for all streams.
+      required:
+      - id
+      - state
+      - publish
+      - expires_at_ms
+      - ttl_seconds
     RegionError:
       type: object
       description: Returned on `409` when the request reaches the wrong region.
@@ -412,14 +420,6 @@ components:
               - string
               - 'null'
               example: us-central1
-    Error:
-      type: object
-      description: Standard error body used by stream-lifecycle and billing endpoints.
-      properties:
-        detail:
-          type: string
-      required:
-      - detail
   headers:
     RegionResponseHeader:
       description: The region that served this request.

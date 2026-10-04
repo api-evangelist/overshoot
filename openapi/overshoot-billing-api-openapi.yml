@@ -133,29 +133,6 @@ paths:
                 $ref: '#/components/schemas/ValidationError'
 components:
   schemas:
-    ValidationError:
-      type: object
-      description: Validation failure shape used by chat completions and billing.
-      properties:
-        error:
-          type: string
-          example: validation_error
-        message:
-          type: string
-          example: Request validation failed
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              loc:
-                type: array
-                items:
-                  type: string
-              msg:
-                type: string
-              type:
-                type: string
     CheckoutResponse:
       type: object
       properties:
@@ -199,6 +176,38 @@ components:
       - input_microcents_per_token
       - output_microcents_per_token
       - public
+    ValidationError:
+      type: object
+      description: Validation failure shape used by chat completions and billing.
+      properties:
+        error:
+          type: string
+          example: validation_error
+        message:
+          type: string
+          example: Request validation failed
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              loc:
+                type: array
+                items:
+                  type: string
+              msg:
+                type: string
+              type:
+                type: string
+    CheckoutRequest:
+      type: object
+      properties:
+        amount_cents:
+          type: integer
+          minimum: 100
+          description: Amount to charge, in cents. Must be at least `100`.
+      required:
+      - amount_cents
     Error:
       type: object
       description: Standard error body used by stream-lifecycle and billing endpoints.
@@ -223,15 +232,6 @@ components:
       - user_id
       - balance_microcents
       - balance_cents
-    CheckoutRequest:
-      type: object
-      properties:
-        amount_cents:
-          type: integer
-          minimum: 100
-          description: Amount to charge, in cents. Must be at least `100`.
-      required:
-      - amount_cents
   securitySchemes:
     bearerAuth:
       type: http

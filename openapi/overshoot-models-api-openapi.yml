@@ -36,21 +36,6 @@ paths:
       - Models
 components:
   schemas:
-    OpenAIModelsResponse:
-      properties:
-        object:
-          type: string
-          title: Object
-          default: list
-        data:
-          items:
-            $ref: '#/components/schemas/OpenAIModelInfo'
-          type: array
-          title: Data
-      type: object
-      required:
-      - data
-      title: OpenAIModelsResponse
     OpenAIModelInfo:
       properties:
         id:
@@ -76,6 +61,34 @@ components:
       - created
       - status
       title: OpenAIModelInfo
+    OpenAIModelsResponse:
+      properties:
+        object:
+          type: string
+          title: Object
+          default: list
+        data:
+          items:
+            $ref: '#/components/schemas/OpenAIModelInfo'
+          type: array
+          title: Data
+      type: object
+      required:
+      - data
+      title: OpenAIModelsResponse
+    ModelsResponse:
+      type: object
+      properties:
+        object:
+          type: string
+          default: list
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelInfo'
+      required:
+      - object
+      - data
     ModelInfo:
       type: object
       properties:
@@ -104,19 +117,6 @@ components:
       - created
       - owned_by
       - status
-    ModelsResponse:
-      type: object
-      properties:
-        object:
-          type: string
-          default: list
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelInfo'
-      required:
-      - object
-      - data
   securitySchemes:
     API_Key:
       type: http
