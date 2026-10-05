@@ -1,0 +1,12 @@
+{
+ "url": "https://api.overshoot.ai/v1/openapi.json",
+ "requested_url": "https://api.overshoot.ai/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 4242,
+ "sha256": "01272e1951522368d960bb2f58f703fd050754caf9ec5e394cc2c1cca786b6ba",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
