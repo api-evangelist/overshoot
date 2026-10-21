@@ -1,23 +1,4 @@
 edges:
-- partner_name: OpenAI
-  partner: openai
-  partner_match: domain
-  type: contract
-  channel: provider-built
-  relationship: compatible
-  direction: provider-built
-  evidence: https://github.com/api-evangelist/overshoot/blob/main/openapi/overshoot-chat-completions-api-openapi.yml#L130
-  contract_reference:
-    repo: overshoot
-    spec_file: overshoot-chat-completions-api-openapi.yml
-    property: description
-    value: OpenAI-compatible
-    note: 'overshoot declares OpenAI compatibility: ''description: OpenAI-compatible chat completions request. Permissive
-      — unknown fields are accepted and ignored.'''
-    detected_by: sweep-model-routing.py
-    detected: '2026-10-15'
-  detected_by: sweep-model-routing.py
-  first_seen: '2026-10-13'
 - partner_name: npm registry
   partner: npm
   partner_match: register
@@ -48,6 +29,54 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: OpenAI
+  partner: openai
+  partner_match: domain
+  type: contract
+  channel: provider-built
+  relationship: compatible
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/overshoot/blob/main/openapi/overshoot-chat-completions-api-openapi.yml#L130
+  contract_reference:
+    repo: overshoot
+    spec_file: overshoot-chat-completions-api-openapi.yml
+    property: description
+    value: OpenAI-compatible
+    note: 'overshoot declares OpenAI compatibility: ''description: OpenAI-compatible chat completions request. Permissive
+      — unknown fields are accepted and ignored.'''
+    detected_by: sweep-model-routing.py
+    detected: '2026-10-19'
+  detected_by: sweep-model-routing.py
+  first_seen: '2026-10-13'
+- partner_name: Y Combinator
+  partner: y-combinator
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.ycombinator.com/companies/overshoot
+  category: accelerator portfolio participation
+  contract_reference:
+    register: Y Combinator company directory (ycombinator.com/companies/<slug>)
+    standard: null
+    spec_file: null
+    role: accelerator-portfolio-company
+    registered_name: Overshoot
+    register_id: https://www.ycombinator.com/companies/overshoot
+    register_country: US
+    register_website: https://overshoot.ai
+    matched_domain: overshoot.ai
+    matched_by: domain
+    signal_note: 'participation only: the accelerator''s own portfolio register lists the company (cohort / investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-accelerator-portfolios.py
+    detected: '2026-10-21'
+    batch: Winter 2026
+    year: '2025'
+    status: Active
+  detected_by: sweep-accelerator-portfolios.py
+  first_seen: '2026-10-21'
 generated: '2026-10-13'
 method: searched
 checked:
@@ -58,11 +87,16 @@ checked:
 - https://registry.npmjs.org
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
+- https://500.co/api/startups
+- https://500.co/companies
+- https://www.antler.co/portfolio
+- https://www.techstars.com/portfolio
+- https://www.ycombinator.com/companies
 source:
-- https://api.nuget.org/v3
-- https://crates.io/api/v1
-- https://proxy.golang.org
-- https://pypi.org/pypi
 - https://registry.npmjs.org
-- https://repo1.maven.org/maven2
+- https://pypi.org/pypi
 - https://rubygems.org/api/v1
+- https://crates.io/api/v1
+- https://repo1.maven.org/maven2
+- https://api.nuget.org/v3
+- https://proxy.golang.org
