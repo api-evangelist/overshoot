@@ -64,6 +64,130 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Overshoot is a company surfaced as a portfolio company of y-combinator and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Overshoot is a real-time video understanding API. Developers create a live video stream, publish frames over WebRTC (LiveKit), then query what the camera sees with vision-language models through an OpenAI-compatible chat completions endpoint — sub-200ms inference against a large catalog of VLMs. Overshoot (YC W2026) targets physical security, safety, gaming, robotics, and consumer products, exposing stream lifecycle management, model listing, prepaid-credit billing, and per-model pricing over a single REST host at api.overshoot.ai.
 
-Backed by: y-combinator
+**Areas:** Company · Artificial Intelligence · Computer Vision · Video · Video Understanding · Vision Language Models · Real-Time · Streaming · WebRTC · Inference · Multi-Modal · Machine Learning
+
+## Overshoot on APIs.io
+
+Everything profiled for Overshoot is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/overshoot/](https://apis.io/providers/overshoot/)** — or go straight to one of the APIs or properties below.
+
+### APIs (8)
+
+- [Overshoot Billing API](https://apis.io/apis/overshoot/overshoot-billing-api/) — Pricing, prepaid balance, and checkout.
+- [Overshoot Healthz API](https://apis.io/apis/overshoot/overshoot-healthz-api/) — The Healthz API from Overshoot — 1 operation(s) for healthz.
+- [Overshoot Metrics API](https://apis.io/apis/overshoot/overshoot-metrics-api/) — The Metrics API from Overshoot — 1 operation(s) for metrics.
+- [Overshoot Models API](https://apis.io/apis/overshoot/overshoot-models-api/) — The Models API from Overshoot — 2 operation(s) for models.
+- [Overshoot Readyz API](https://apis.io/apis/overshoot/overshoot-readyz-api/) — The Readyz API from Overshoot — 1 operation(s) for readyz.
+- [Overshoot Streams API](https://apis.io/apis/overshoot/overshoot-streams-api/) — Create, inspect, keep alive, and delete live video streams.
+- [Overshoot V1beta API](https://apis.io/apis/overshoot/overshoot-v1beta-api/) — The V1beta API from Overshoot — 1 operation(s) for v1beta.
+- [Overshoot Chat Completions API](https://apis.io/apis/overshoot/overshoot-chat-completions-api/) — The Chat Completions API from Overshoot — 1 operation(s) for chat completions.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [overshoot-mcp.yml](https://apis.io/servers/overshoot/overshoot-mcp-yml/)
+
+#### Collections (8)
+
+Postman and Open Collection request collections.
+
+- [Inference Service Billing API](https://apis.io/collections/overshoot/open-overshoot-billing-api/)
+- [Inference Service Billing Chat API](https://apis.io/collections/overshoot/open-overshoot-chat-api/)
+- [Inference Service Billing Healthz API](https://apis.io/collections/overshoot/open-overshoot-healthz-api/)
+- [Inference Service Billing Metrics API](https://apis.io/collections/overshoot/open-overshoot-metrics-api/)
+- [Inference Service Billing Models API](https://apis.io/collections/overshoot/open-overshoot-models-api/)
+- [Inference Service Billing Readyz API](https://apis.io/collections/overshoot/open-overshoot-readyz-api/)
+- [Inference Service Billing Streams API](https://apis.io/collections/overshoot/open-overshoot-streams-api/)
+- [Inference Service Billing V1beta API](https://apis.io/collections/overshoot/open-overshoot-v1beta-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Overshoot Openapi Overlay](https://apis.io/overlays/overshoot/overshoot-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Overshoot Authentication](https://apis.io/security/overshoot/overshoot-authentication/)
+- [Overshoot Domain Security](https://apis.io/security/overshoot/overshoot-domain-security/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Overshoot Rate Limits](https://apis.io/rate-limits/overshoot/overshoot-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.overshoot.ai/)
+- [Documentation](https://docs.overshoot.ai)
+- [Getting started](https://docs.overshoot.ai/quickstart)
+- [API reference](https://docs.overshoot.ai/api-reference/introduction)
+- [Sign up](https://platform.overshoot.ai)
+- [Support](https://overshoot.ai/faq)
+- [Blog](https://overshoot.ai/blogs)
+- [Privacy policy](https://platform.overshoot.ai/privacy.html)
+- [GitHub](https://github.com/Overshoot-ai)
+
+## API Evangelist rating
+
+**Kin Score 35.3** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 43.6 |
+| Contract governance | 4.5 |
+| Operational transparency | 23.7 |
+| Developer ergonomics | 56.5 |
+| Access clarity | 10.5 |
+
+**Agent readiness 24.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 19.1** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/overshoot/](https://apis.io/providers/overshoot/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Overshoot: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/overshoot/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
